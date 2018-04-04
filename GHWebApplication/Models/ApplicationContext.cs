@@ -12,6 +12,6 @@ namespace GHWebApplication.Models
             : base(options)
         { }
 
-        public DbSet<Device> Deviсes { get; set; }
+        public DbSet<Device> Devices { get; set; }
     }
 }

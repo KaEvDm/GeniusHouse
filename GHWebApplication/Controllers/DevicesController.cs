@@ -5,21 +5,22 @@ using GHWebApplication.Models;
 
 namespace HelloAngularApp.Controllers
 {
-    [Route("api/products")]
-    public class ProductController : Controller
+    [Route("api/devices")]
+    public class DeviceController : Controller
     {
         ApplicationContext db;
-        public ProductController(ApplicationContext context)
+        public DeviceController(ApplicationContext context)
         {
             db = context;
             if (!db.Devices.Any())
             {
-                db.Devices.Add(new Device { Name = "iPhone X", Company = "Apple", Price = 79900 });
-                db.Devices.Add(new Device { Name = "Galaxy S8", Company = "Samsung", Price = 49900 });
-                db.Devices.Add(new Device { Name = "Pixel 2", Company = "Google", Price = 52900 });
+                db.Devices.Add(new Device { Name = "SmartWatch", Company = "Apple"});
+                db.Devices.Add(new Device { Name = "Column Speaker", Company = "Samsung" });
+                db.Devices.Add(new Device { Name = "Smart TV", Company = "Google"});
                 db.SaveChanges();
             }
         }
+
         [HttpGet]
         public IEnumerable<Device> Get()
         {
@@ -29,30 +30,30 @@ namespace HelloAngularApp.Controllers
         [HttpGet("{id}")]
         public Device Get(int id)
         {
-            Device product = db.Devices.FirstOrDefault(x => x.Id == id);
-            return product;
+            Device dev = db.Devices.FirstOrDefault(x => x.Id == id);
+            return dev;
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody]Device product)
+        public IActionResult Post([FromBody]Device dev)
         {
             if (ModelState.IsValid)
             {
-                db.Devices.Add(product);
+                db.Devices.Add(dev);
                 db.SaveChanges();
-                return Ok(product);
+                return Ok(dev);
             }
             return BadRequest(ModelState);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody]Device product)
+        public IActionResult Put(int id, [FromBody]Device dev)
         {
             if (ModelState.IsValid)
             {
-                db.Update(product);
+                db.Update(dev);
                 db.SaveChanges();
-                return Ok(product);
+                return Ok(dev);
             }
             return BadRequest(ModelState);
         }
@@ -60,13 +61,13 @@ namespace HelloAngularApp.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            Device product = db.Devices.FirstOrDefault(x => x.Id == id);
-            if (product != null)
+            Device dev = db.Devices.FirstOrDefault(x => x.Id == id);
+            if (dev != null)
             {
-                db.Devices.Remove(product);
+                db.Devices.Remove(dev);
                 db.SaveChanges();
             }
-            return Ok(product);
+            return Ok(dev);
         }
     }
 }
