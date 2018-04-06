@@ -12,13 +12,6 @@ namespace HelloAngularApp.Controllers
         public DeviceController(ApplicationContext context)
         {
             db = context;
-            if (!db.Devices.Any())
-            {
-                db.Devices.Add(new Device { Name = "SmartWatch", Company = "Apple"});
-                db.Devices.Add(new Device { Name = "Column Speaker", Company = "Samsung" });
-                db.Devices.Add(new Device { Name = "Smart TV", Company = "Google"});
-                db.SaveChanges();
-            }
         }
 
         [HttpGet]

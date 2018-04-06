@@ -1,0 +1,11 @@
+﻿<h2>Список моделей</h2>
+<table class="table table-striped">
+    <tbody>
+        <tr *ngFor="let p of devices">
+            <td><a [routerLink]="['device', p.id]" class="nav-link">{{p?.name}}</a></td>
+        </tr>
+    </tbody>
+</table>
+<div>
+    <p><a [routerLink]="'Редактировать'" class="nav-link">Изменить список</a></p>
+</div>

@@ -3,26 +3,34 @@ import { HttpClient } from '@angular/common/http';
 import { Device } from './device';
 
 @Injectable()
-export class DataService {
+export class DataService
+{
 
     private url = "/api/devices";
 
-    constructor(private http: HttpClient) {
-    }
+    constructor(private http: HttpClient) { }
 
-    getDevices() {
+    getDevices()
+    {
         return this.http.get(this.url);
     }
 
-    createDevice(device: Device) {
-        return this.http.post(this.url, device);
+    getDevice(id: number) {
+        return this.http.get(this.url + '/' + id);
     }
 
-    updateDevice(device: Device) {
+    createDevice(device: Device)
+    {
+        return this.http.post(this.url, device, { observe: 'response' });
+    }
+
+    updateDevice(device: Device)
+    {
         return this.http.put(this.url + '/' + device.id, device);
     }
 
-    deleteDevice(id: number) {
+    deleteDevice(id: number)
+    {
         return this.http.delete(this.url + '/' + id);
     }
 }

@@ -1,0 +1,62 @@
+﻿<h1>Список моделей</h1>
+<table *ngIf="tableMode; else create" class="table table-striped">
+    <thead>
+        <tr>
+            <td>Модель</td>
+            <td>Производитель</td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let p of devices">
+            <ng-template [ngIf]="device?.id != p.id" [ngIfElse]="edit">
+                <td>{{p?.name}}</td>
+                <td>{{p?.company}}</td>
+                <td>
+                    <button class="btn btn-sm btn-primary" (click)="editDevice(p)">Изменить</button>
+                    <button class="btn btn-sm btn-danger" (click)="delete(p)">Удалить</button>
+                </td>
+            </ng-template>
+        </tr>
+    </tbody>
+</table>
+
+<!--шаблон для редактирования-->
+<ng-template #edit>
+    <td>
+        <input type="text" [(ngModel)]="device.name" class="form-control" />
+    </td>
+    <td>
+        <input type="text" [(ngModel)]="device.company" class="form-control" />
+    </td>
+    <td>
+        <input type="button" value="Сохранить" (click)="save()" class="btn btn-sm btn-success" />
+        <input type="button" value="Отмена" (click)="cancel()" class="btn btn-sm btn-warning" />
+    </td>
+</ng-template>
+
+<div class="row">
+    <div class="col-md-6">
+        <input type="button" value="Добавить" class="btn btn-default" (click)="add()" />
+    </div>
+
+    <div class="col-md-6 text-right">
+        <a routerLink="/" class="nav-link">К списку моделей</a>
+    </div>
+</div>
+
+<!--шаблон для добавления-->
+<ng-template #create>
+    <div class="form-group">
+        <label>Модель</label>
+        <input type="text" [(ngModel)]="device.name" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Производитель</label>
+        <input type="text" [(ngModel)]="device.company" class="form-control" />
+    </div>
+    <div>
+        <input type="button" value="Сохранить" (click)="save()" class="btn btn-success" />
+        <input type="button" value="Отмена" (click)="cancel()" class="btn btn-warning" />
+    </div>
+</ng-template>

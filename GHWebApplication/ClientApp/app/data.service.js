@@ -17,8 +17,11 @@ var DataService = /** @class */ (function () {
     DataService.prototype.getDevices = function () {
         return this.http.get(this.url);
     };
+    DataService.prototype.getDevice = function (id) {
+        return this.http.get(this.url + '/' + id);
+    };
     DataService.prototype.createDevice = function (device) {
-        return this.http.post(this.url, device);
+        return this.http.post(this.url, device, { observe: 'response' });
     };
     DataService.prototype.updateDevice = function (device) {
         return this.http.put(this.url + '/' + device.id, device);

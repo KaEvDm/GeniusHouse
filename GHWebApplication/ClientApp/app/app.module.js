@@ -8,14 +8,25 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
+import { DeviceDetailComponent } from './device-detail.component';
+import { DeviceListComponent } from './device-list.component';
+import { DevicesListEdit } from './devices-list-edit.component';
+// определение маршрутов
+var appRoutes = [
+    { path: '', component: DeviceListComponent },
+    { path: 'device/:id', component: DeviceDetailComponent },
+    { path: 'Редактировать', component: DevicesListEdit },
+    { path: '**', redirectTo: '/' }
+];
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
     AppModule = __decorate([
         NgModule({
-            imports: [BrowserModule, FormsModule, HttpClientModule],
-            declarations: [AppComponent],
+            imports: [BrowserModule, FormsModule, HttpClientModule, RouterModule.forRoot(appRoutes)],
+            declarations: [AppComponent, DeviceListComponent, DevicesListEdit, DeviceDetailComponent],
             bootstrap: [AppComponent]
         })
     ], AppModule);
