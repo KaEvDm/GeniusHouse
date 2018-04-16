@@ -8,30 +8,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { DataService } from './data.service';
-var DeviceListComponent = /** @class */ (function () {
-    function DeviceListComponent(dataService) {
+import { Device } from './device';
+var DeviceCreateComponent = /** @class */ (function () {
+    function DeviceCreateComponent(dataService, router) {
         this.dataService = dataService;
+        this.router = router;
+        this.device = new Device(); // добавляемый объект
     }
-    DeviceListComponent.prototype.ngOnInit = function () {
-        this.load();
-    };
-    DeviceListComponent.prototype.load = function () {
+    DeviceCreateComponent.prototype.save = function () {
         var _this = this;
-        this.dataService.getDevices().subscribe(function (data) { return _this.devices = data; });
+        this.dataService.createDevice(this.device).subscribe(function (data) { return _this.router.navigateByUrl("/"); });
     };
-    DeviceListComponent.prototype.delete = function (id) {
-        var _this = this;
-        this.dataService.deleteDevice(id).subscribe(function (data) { return _this.load(); });
-    };
-    DeviceListComponent = __decorate([
+    DeviceCreateComponent = __decorate([
         Component({
-            templateUrl: './device-list.component.html',
-            providers: [DataService]
+            templateUrl: './device-create.component.html'
         }),
-        __metadata("design:paramtypes", [DataService])
-    ], DeviceListComponent);
-    return DeviceListComponent;
+        __metadata("design:paramtypes", [DataService, Router])
+    ], DeviceCreateComponent);
+    return DeviceCreateComponent;
 }());
-export { DeviceListComponent };
-//# sourceMappingURL=device-list.component.js.map
+export { DeviceCreateComponent };
+//# sourceMappingURL=device-create.component.js.map

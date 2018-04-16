@@ -12,8 +12,15 @@ export class DeviceListComponent implements OnInit
 
     constructor(private dataService: DataService) { }
 
-    ngOnInit()
-    {
+    ngOnInit() {
+        this.load();
+    }
+
+    load() {
         this.dataService.getDevices().subscribe((data: Device[]) => this.devices = data);
+    }
+
+    delete(id: number) {
+        this.dataService.deleteDevice(id).subscribe(data => this.load());
     }
 }

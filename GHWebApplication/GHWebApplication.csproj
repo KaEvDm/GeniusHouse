@@ -8,10 +8,13 @@
   <ItemGroup>
     <None Remove="ClientApp\app\app.module.ts" />
     <None Remove="ClientApp\app\data.service.ts" />
+    <None Remove="ClientApp\app\device-create.component.ts" />
     <None Remove="ClientApp\app\device-detail.component.ts" />
+    <None Remove="ClientApp\app\device-edit.component.ts" />
     <None Remove="ClientApp\app\device-list.component.ts" />
     <None Remove="ClientApp\app\device.ts" />
     <None Remove="ClientApp\app\devices-list-edit.component.ts" />
+    <None Remove="ClientApp\app\not-found.component.ts" />
     <None Remove="ClientApp\main.ts" />
     <None Remove="ClientApp\polyfills.ts" />
   </ItemGroup>
@@ -26,10 +29,13 @@
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\app\app.module.ts" />
     <TypeScriptCompile Include="ClientApp\app\data.service.ts" />
+    <TypeScriptCompile Include="ClientApp\app\device-create.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\device-detail.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\device-list.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\device.ts" />
     <TypeScriptCompile Include="ClientApp\app\devices-list-edit.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\device-edit.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\not-found.component.ts" />
     <TypeScriptCompile Include="ClientApp\main.ts" />
     <TypeScriptCompile Include="ClientApp\polyfills.ts" />
   </ItemGroup>
