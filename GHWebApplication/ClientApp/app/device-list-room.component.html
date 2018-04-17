@@ -1,0 +1,21 @@
+﻿<div>
+    <a routerLink="/" class="nav-link">К списку моделей</a>
+</div>
+<p>Комната {{room}}</p>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <td>Модель</td>
+            <td>Производитель</td>
+            <td>Комната</td>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr *ngFor="let p of devices">
+            <td>{{p?.name}}</td>
+            <td>{{p?.company}}</td>
+            <td>{{p?.room}}</td>
+        </tr>
+    </tbody>
+</table>

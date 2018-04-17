@@ -19,6 +19,10 @@ export class DataService
         return this.http.get(this.url + '/' + id);
     }
 
+    getDevicesFromRoom(room: string) {
+        return this.http.get(this.url + '/' + room);
+    }
+
     createDevice(device: Device)
     {
         return this.http.post(this.url, device, { observe: 'response' });

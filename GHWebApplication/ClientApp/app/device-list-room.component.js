@@ -8,28 +8,31 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { DataService } from './data.service';
-var DeviceDetailComponent = /** @class */ (function () {
-    function DeviceDetailComponent(dataService, activeRoute) {
+var DeviceListRoomComponent = /** @class */ (function () {
+    function DeviceListRoomComponent(dataService, router, activeRoute) {
         this.dataService = dataService;
-        this.loaded = false;
-        this.id = Number.parseInt(activeRoute.snapshot.params["id"]);
+        this.router = router;
+        this.room = activeRoute.snapshot.params["room"];
     }
-    DeviceDetailComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        if (this.id)
-            this.dataService.getDevice(this.id)
-                .subscribe(function (data) { _this.device = data; _this.loaded = true; });
+    DeviceListRoomComponent.prototype.ngOnInit = function () {
+        this.load();
     };
-    DeviceDetailComponent = __decorate([
+    DeviceListRoomComponent.prototype.load = function () {
+        var _this = this;
+        if (this.room)
+            this.dataService.getDevicesFromRoom(this.room)
+                .subscribe(function (data) { return _this.devices = data; });
+    };
+    DeviceListRoomComponent = __decorate([
         Component({
-            templateUrl: './device-detail.component.html',
+            templateUrl: './device-list-room.component.html',
             providers: [DataService]
         }),
-        __metadata("design:paramtypes", [DataService, ActivatedRoute])
-    ], DeviceDetailComponent);
-    return DeviceDetailComponent;
+        __metadata("design:paramtypes", [DataService, Router, ActivatedRoute])
+    ], DeviceListRoomComponent);
+    return DeviceListRoomComponent;
 }());
-export { DeviceDetailComponent };
-//# sourceMappingURL=device-detail.component.js.map
+export { DeviceListRoomComponent };
+//# sourceMappingURL=device-list-room.component.js.map

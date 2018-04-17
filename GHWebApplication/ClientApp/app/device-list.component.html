@@ -1,5 +1,7 @@
 ﻿<div>
     <a routerLink="/create" class="nav-link">Добавить</a>
+    <a [routerLink]="['selectroom', room]" class="btn btn-sm btn-primary">Отсортировать по</a>
+    <input type="text" [(ngModel)]="room" class="form-control" />
 </div>
 <table class="table table-striped">
     <thead>

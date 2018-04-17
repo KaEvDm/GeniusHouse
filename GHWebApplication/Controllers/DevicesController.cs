@@ -5,7 +5,7 @@ using GHWebApplication.Models;
 
 namespace HelloAngularApp.Controllers
 {
-    [Route("api/devices")]
+    [Route("api/[controller]/[action]/")]
     public class DeviceController : Controller
     {
         ApplicationContext db;
@@ -15,16 +15,41 @@ namespace HelloAngularApp.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Device> Get()
+        public IEnumerable<Device> GetAll()
         {
             return db.Devices.ToList();
         }
 
-        [HttpGet("{id}")]
-        public Device Get(int id)
+        [HttpGet("{id:int}")]
+        public Device GetOne(int id)
         {
             Device dev = db.Devices.FirstOrDefault(x => x.Id == id);
             return dev;
+        }
+
+        //http://localhost:52131/api/device/GetSort?room=handheld&category=phone
+        public IEnumerable<Device> GetSort(string room, string category)
+        {
+            List<Device> dev = new List<Device>();
+
+            if(room != null)
+            {
+                dev = db.Devices.Where(x => x.Room == room).ToList();
+                if (category != null)
+                {
+                    dev = dev.Where(x => x.Category == category).ToList();
+                }
+            }
+            else
+            {
+                if(category != null)
+                {
+                    dev = db.Devices.Where(x => x.Category == category).ToList();
+                }
+            }
+
+            return dev;
+            
         }
 
         [HttpPost]

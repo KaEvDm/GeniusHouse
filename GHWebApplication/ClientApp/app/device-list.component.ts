@@ -1,4 +1,4 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import { Input, Component, OnInit } from '@angular/core';
 import { DataService } from './data.service';
 import { Device } from './device';
 
@@ -9,6 +9,8 @@ import { Device } from './device';
 export class DeviceListComponent implements OnInit
 {
     devices: Device[];
+
+    @Input() room: string;
 
     constructor(private dataService: DataService) { }
 

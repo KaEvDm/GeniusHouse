@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component } from '@angular/core';
+import { Input, Component } from '@angular/core';
 import { DataService } from './data.service';
 var DeviceListComponent = /** @class */ (function () {
     function DeviceListComponent(dataService) {
@@ -24,6 +24,10 @@ var DeviceListComponent = /** @class */ (function () {
         var _this = this;
         this.dataService.deleteDevice(id).subscribe(function (data) { return _this.load(); });
     };
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], DeviceListComponent.prototype, "room", void 0);
     DeviceListComponent = __decorate([
         Component({
             templateUrl: './device-list.component.html',
