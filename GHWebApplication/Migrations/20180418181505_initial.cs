@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace GHWebApplication.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,8 +15,12 @@ namespace GHWebApplication.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    Category = table.Column<string>(nullable: true),
                     Company = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: true)
+                    Info = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
+                    Power = table.Column<bool>(nullable: false),
+                    Room = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

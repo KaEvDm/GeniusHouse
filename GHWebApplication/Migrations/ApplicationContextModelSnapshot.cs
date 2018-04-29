@@ -29,6 +29,8 @@ namespace GHWebApplication.Migrations
 
                     b.Property<string>("Company");
 
+                    b.Property<string>("Info");
+
                     b.Property<string>("Name");
 
                     b.Property<bool>("Power");

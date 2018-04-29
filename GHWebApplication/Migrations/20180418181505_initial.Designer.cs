@@ -11,8 +11,8 @@ using System;
 namespace GHWebApplication.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20180416154055_reDevice")]
-    partial class reDevice
+    [Migration("20180418181505_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -29,6 +29,8 @@ namespace GHWebApplication.Migrations
                     b.Property<string>("Category");
 
                     b.Property<string>("Company");
+
+                    b.Property<string>("Info");
 
                     b.Property<string>("Name");
 

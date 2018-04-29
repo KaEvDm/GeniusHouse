@@ -13,5 +13,6 @@ namespace GHWebApplication.Models
         public string Name { get; set; }
         public string Company { get; set; } 
         public bool Power { get; set; }
+        public string Info { get; set; }
     }
 }
