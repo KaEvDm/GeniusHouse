@@ -12,25 +12,26 @@ import { HttpClient } from '@angular/common/http';
 var DataService = /** @class */ (function () {
     function DataService(http) {
         this.http = http;
-        this.url = "/api/devices";
+        this.url = "/api/device/";
     }
     DataService.prototype.getDevices = function () {
-        return this.http.get(this.url);
+        return this.http.get(this.url + "GetAll");
     };
     DataService.prototype.getDevice = function (id) {
-        return this.http.get(this.url + '/' + id);
+        return this.http.get(this.url + "GetOne/" + id);
     };
-    DataService.prototype.getDevicesFromRoom = function (room) {
-        return this.http.get(this.url + '/' + room);
+    DataService.prototype.getDevicesSort = function (room, category) {
+        //?параметр1=значение1&параметр2=значение2
+        return this.http.get(this.url + "GetSort?room=" + room + "&category=" + category);
     };
     DataService.prototype.createDevice = function (device) {
-        return this.http.post(this.url, device, { observe: 'response' });
+        return this.http.post(this.url + "AddNew", device, { observe: 'response' });
     };
     DataService.prototype.updateDevice = function (device) {
-        return this.http.put(this.url + '/' + device.id, device);
+        return this.http.put(this.url + "Update/" + device.id, device);
     };
     DataService.prototype.deleteDevice = function (id) {
-        return this.http.delete(this.url + '/' + id);
+        return this.http.delete(this.url + "Delete/" + id);
     };
     DataService = __decorate([
         Injectable(),

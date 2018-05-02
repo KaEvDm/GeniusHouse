@@ -3,9 +3,9 @@
     constructor(
         public id?: number,
         public name?: string,
+        public company?: string,
         public category?: string,
         public room?: string,
-        public power?: string,
-        public brightness?: number,
-        public company?: string) { }
+        public power?: boolean,
+        public info?: string) { }
 }

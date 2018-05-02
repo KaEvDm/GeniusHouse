@@ -38,6 +38,8 @@ namespace HelloAngularApp.Controllers
 
         public IEnumerable<Device> GetSort(string room = "", string category = "")
         {
+            if (category == null) category = "";
+            if (room == null) room = "";
             return db.Devices.Where(x => x.Room.Contains(room)).Where(x => x.Category.Contains(category)).ToList();
         }
 
@@ -46,12 +48,14 @@ namespace HelloAngularApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                //============кусок который должен будет взаимодействовать с микроконтроллером========
                 //"test." - это namespace в котором лежит dev
                 //dev.Category - ну к примеру "Lamp"
-                var type = Type.GetType("test." + dev.Category);
+                //var type = Type.GetType("DeviceCategories." + dev.Category);
 
-                ConstructorInfo ctor = type.GetConstructor(new Type[] { dev.GetType() });
-                var result = ctor.Invoke(new object[] { dev });
+                //ConstructorInfo ctor = type.GetConstructor(new Type[] { dev.GetType() });
+                //var result = ctor.Invoke(new object[] { dev });
+                //============кусок который должен будет взаимодействовать с микроконтроллером========
 
                 db.Devices.Add(dev);
                 db.SaveChanges();

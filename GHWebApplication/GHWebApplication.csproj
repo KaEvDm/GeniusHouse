@@ -18,6 +18,7 @@
     <None Remove="ClientApp\app\device-list-room.component.ts" />
     <None Remove="ClientApp\app\device-list.component.ts" />
     <None Remove="ClientApp\app\device.ts" />
+    <None Remove="ClientApp\app\ListExistingDevices.ts" />
     <None Remove="ClientApp\app\not-found.component.ts" />
     <None Remove="ClientApp\main.ts" />
     <None Remove="ClientApp\polyfills.ts" />
@@ -38,6 +39,7 @@
     <TypeScriptCompile Include="ClientApp\app\device-list.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\device.ts" />
     <TypeScriptCompile Include="ClientApp\app\device-edit.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\ListExistingDevices.ts" />
     <TypeScriptCompile Include="ClientApp\app\not-found.component.ts" />
     <TypeScriptCompile Include="ClientApp\main.ts" />
     <TypeScriptCompile Include="ClientApp\polyfills.ts" />

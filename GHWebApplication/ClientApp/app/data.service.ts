@@ -6,35 +6,36 @@ import { Device } from './device';
 export class DataService
 {
 
-    private url = "/api/devices";
+    private url = "/api/device/";
 
     constructor(private http: HttpClient) { }
 
     getDevices()
     {
-        return this.http.get(this.url);
+        return this.http.get(this.url + "GetAll");
     }
 
     getDevice(id: number) {
-        return this.http.get(this.url + '/' + id);
+        return this.http.get(this.url + "GetOne/" + id);
     }
 
-    getDevicesFromRoom(room: string) {
-        return this.http.get(this.url + '/' + room);
+    getDevicesSort(room?: string, category?: string) {
+        //?параметр1=значение1&параметр2=значение2
+        return this.http.get(this.url + "GetSort?room=" + room + "&category=" + category);
     }
 
     createDevice(device: Device)
     {
-        return this.http.post(this.url, device, { observe: 'response' });
+        return this.http.post(this.url + "AddNew", device, { observe: 'response' });
     }
 
     updateDevice(device: Device)
     {
-        return this.http.put(this.url + '/' + device.id, device);
+        return this.http.put(this.url + "Update/" + device.id, device);
     }
 
     deleteDevice(id: number)
     {
-        return this.http.delete(this.url + '/' + id);
+        return this.http.delete(this.url + "Delete/" + id);
     }
 }

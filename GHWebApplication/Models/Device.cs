@@ -14,5 +14,18 @@ namespace GHWebApplication.Models
         public string Company { get; set; } 
         public bool Power { get; set; }
         public string Info { get; set; }
+
+        public Device() { }
+
+        public Device(Device dev)
+        {
+            this.Id = dev.Id;
+            this.Category = dev.Category;
+            this.Room = dev.Room;
+            this.Name = dev.Name;
+            this.Company = dev.Company;
+            this.Power = dev.Power;
+            this.Info = dev.Info;
+        }
     }
 }

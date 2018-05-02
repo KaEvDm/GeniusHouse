@@ -22,7 +22,7 @@ var DeviceListRoomComponent = /** @class */ (function () {
     DeviceListRoomComponent.prototype.load = function () {
         var _this = this;
         if (this.room)
-            this.dataService.getDevicesFromRoom(this.room)
+            this.dataService.getDevicesSort(this.room)
                 .subscribe(function (data) { return _this.devices = data; });
     };
     DeviceListRoomComponent = __decorate([

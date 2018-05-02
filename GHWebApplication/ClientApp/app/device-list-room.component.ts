@@ -24,7 +24,7 @@ export class DeviceListRoomComponent implements OnInit {
 
     load() {
         if (this.room)
-            this.dataService.getDevicesFromRoom(this.room)
+            this.dataService.getDevicesSort(this.room, "")
                 .subscribe((data: Device[]) => this.devices = data);
     }
 }
