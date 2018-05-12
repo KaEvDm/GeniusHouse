@@ -8,10 +8,12 @@ namespace GHWebApplication.Models
 {
     public class ApplicationContext : DbContext
     {
+        public DbSet<Device> Devices { get; set; }
+
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)
-        { }
+        {
 
-        public DbSet<Device> Devices { get; set; }
+        }
     }
 }

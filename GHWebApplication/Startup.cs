@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using GHWebApplication.TasksRunAsync;
 
 namespace GHWebApplication
 {
@@ -19,10 +21,12 @@ namespace GHWebApplication
         //Используется для добавления сервисов в контейнер
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc();
             string connectionString = "Host=localhost;Port=5432;Database=DevicesDb;Username=postgres;Password=123";
             services.AddDbContext<ApplicationContext>(options => options.UseNpgsql(connectionString));
-
-            services.AddMvc();
+            services.AddSingleton<ITaskInvoke, UpdateDatabase>();
+            services.AddSingleton<IHostedService, TaskRunner>();
+            
         }
 
         //Этот метод вызывается во время исполнения. 

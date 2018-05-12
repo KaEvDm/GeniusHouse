@@ -14,8 +14,6 @@ namespace GHWebApplication
     {
         public static void Main(string[] args)
         {
-            var str = UpdateDatabase.getRequest();
-
             BuildWebHost(args).Run();
         }
 
