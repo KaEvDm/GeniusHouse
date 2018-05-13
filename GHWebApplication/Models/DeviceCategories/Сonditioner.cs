@@ -12,7 +12,7 @@ namespace DeviceCategories
 
         public Сonditioner(Device dev)
         {
-            this.Temperature = DeviceInfoSerializer.RunNumber(dev.Info, "Brightness");
+            this.Temperature = Convert.ToInt32(DeviceInfoSerializer.RunString(dev.Info, "Brightness"));
         }
     }
 }

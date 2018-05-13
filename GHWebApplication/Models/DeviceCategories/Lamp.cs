@@ -13,7 +13,7 @@ namespace DeviceCategories
 
         public Lamp(Device dev) : base(dev)
         {
-            this.Brightness = DeviceInfoSerializer.RunNumber(dev.Info, "Brightness");
+            this.Brightness = Convert.ToInt32(DeviceInfoSerializer.RunString(dev.Info, "brightness"));
             //ColorRGB = new int[3];
         }
     }

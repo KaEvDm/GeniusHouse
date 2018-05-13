@@ -14,19 +14,19 @@ namespace GHWebApplication.TasksRunAsync
     {
 
         public IServiceProvider _provider;
-        public ILogger<UpdateDatabase> _log;
+        //public ILogger<UpdateDatabase> _log;
 
         public double PeriodMS => 1000*30;
 
         public UpdateDatabase(IServiceProvider provider, ILogger<UpdateDatabase> log)
         {
             _provider = provider;
-            _log = log; 
+            //_log = log; 
         }
 
         public Task GetRequest()
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://localhost/api/lamps");
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://localhost/api/lamp/get");
 
             WebResponse response = request.GetResponse();
             using(var scope = _provider.CreateScope())
@@ -36,8 +36,19 @@ namespace GHWebApplication.TasksRunAsync
                     using (StreamReader reader = new StreamReader(stream))
                     {
                         var context = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
-                        var divD = context.Devices.Where(z => z!= null).ToList();
-                        _log.LogInformation(reader.ReadToEnd());
+                        //var divD = context.Devices.Where(z => z!= null).ToList();
+                        var devices = DeviceInfoSerializer.ConvertJsonInDevices(reader.ReadToEnd(), context);
+                        foreach (var item in devices)
+                        {
+                            item.Id = context.Devices.FirstOrDefault(x => x.Name == item.Name).Id;
+                            context.Update(item);
+                            context.SaveChanges();
+                        }
+
+
+                        //_log.LogInformation(reader.ReadToEnd());
+
+
                         return null;
                     }
                 }

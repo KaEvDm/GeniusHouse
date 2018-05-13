@@ -4,6 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using GHWebApplication.Models;
 using System;
 using System.Reflection;
+using System.Net;
+using System.IO;
+using System.Text;
+using Newtonsoft.Json;
 
 namespace HelloAngularApp.Controllers
 {
@@ -14,13 +18,13 @@ namespace HelloAngularApp.Controllers
         public DeviceController(ApplicationContext context)
         {
             db = context;
-            if (!db.Devices.Any())
-            {
-                db.Devices.Add(new Device { Name = "iPhone X", Company = "Apple" });
-                db.Devices.Add(new Device { Name = "Galaxy S8", Company = "Samsung" });
-                db.Devices.Add(new Device { Name = "Pixel 2", Company = "Google" });
-                db.SaveChanges();
-            }
+            //if (!db.Devices.Any())
+            //{
+            //    db.Devices.Add(new Device { Name = "iPhone X", Company = "Apple" });
+            //    db.Devices.Add(new Device { Name = "Galaxy S8", Company = "Samsung" });
+            //    db.Devices.Add(new Device { Name = "Pixel 2", Company = "Google" });
+            //    db.SaveChanges();
+            //}
         }
 
         [HttpGet]
@@ -57,9 +61,25 @@ namespace HelloAngularApp.Controllers
                 //var result = ctor.Invoke(new object[] { dev });
                 //============кусок который должен будет взаимодействовать с микроконтроллером========
 
-                db.Devices.Add(dev);
-                db.SaveChanges();
-                return Ok(dev);
+                string requestUri = "http://localhost/api/lamp/connectDevice?name=" + dev.Name;
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(requestUri);
+
+                WebResponse response = request.GetResponse();
+                using (var streamReader = new StreamReader(response.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+
+                    if(result == "device is connected" || result == "device is already connected")
+                    {
+                        db.Devices.Add(dev);
+                        db.SaveChanges();
+                        return Ok(dev);
+                    }
+                    else
+                    {
+                        return BadRequest("device is not found");
+                    }
+                }
             }
             return BadRequest(ModelState);
         }
@@ -69,10 +89,31 @@ namespace HelloAngularApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://localhost/api/lamp/command");
+                request.Method = "PUT";
+                request.ContentType = "application/json";
+
+                var type = Type.GetType("DeviceCategories." + dev.Category);
+                ConstructorInfo ctor = type.GetConstructor(new Type[] { dev.GetType() });
+                var resultDev = ctor.Invoke(new object[] { dev });
+
+                using (var streamWriter = new StreamWriter(request.GetRequestStream()))
+                {
+                    var json = JsonConvert.SerializeObject(resultDev);
+                    streamWriter.Write(json);
+                }
+
+                WebResponse response = request.GetResponse();
+                using (var streamReader = new StreamReader(response.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+                }
+
                 db.Update(dev);
                 db.SaveChanges();
                 return Ok(dev);
             }
+
             return BadRequest(ModelState);
         }
 
@@ -82,8 +123,25 @@ namespace HelloAngularApp.Controllers
             Device dev = db.Devices.FirstOrDefault(x => x.Id == id);
             if (dev != null)
             {
-                db.Devices.Remove(dev);
-                db.SaveChanges();
+                string requestUri = "http://localhost/api/lamp/disconnectDevice?name=" + dev.Name;
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(requestUri);
+
+                WebResponse response = request.GetResponse();
+                using (var streamReader = new StreamReader(response.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+
+                    if (result == "device is disconnected" || result == "device is already disconnected")
+                    {
+                        db.Devices.Remove(dev);
+                        db.SaveChanges();
+                        return Ok(dev);
+                    }
+                    else
+                    {
+                        return BadRequest("device is not found");
+                    }
+                }
             }
             return Ok(dev);
         }
