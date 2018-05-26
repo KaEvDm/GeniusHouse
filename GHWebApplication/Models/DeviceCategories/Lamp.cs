@@ -9,12 +9,10 @@ namespace DeviceCategories
     public class Lamp : Device
     {
         public int Brightness { get; set; }
-        //public int[] ColorRGB { get; set; }
 
         public Lamp(Device dev) : base(dev)
         {
             this.Brightness = Convert.ToInt32(DeviceInfoSerializer.RunString(dev.Info, "brightness"));
-            //ColorRGB = new int[3];
         }
     }
 }

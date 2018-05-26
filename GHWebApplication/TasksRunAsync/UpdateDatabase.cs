@@ -14,19 +14,17 @@ namespace GHWebApplication.TasksRunAsync
     {
 
         public IServiceProvider _provider;
-        //public ILogger<UpdateDatabase> _log;
 
-        public double PeriodMS => 1000*30;
+        public double PeriodMS => 1000 * 30; //30 сек
 
-        public UpdateDatabase(IServiceProvider provider, ILogger<UpdateDatabase> log)
+        public UpdateDatabase(IServiceProvider provider)
         {
             _provider = provider;
-            //_log = log; 
         }
 
-        public Task GetRequest()
+        public Task GetRequest(string devCategory)
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://localhost/api/lamp/get");
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://localhost/api/" + devCategory + "/get");
 
             WebResponse response = request.GetResponse();
             using(var scope = _provider.CreateScope())
@@ -36,7 +34,7 @@ namespace GHWebApplication.TasksRunAsync
                     using (StreamReader reader = new StreamReader(stream))
                     {
                         var context = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
-                        //var divD = context.Devices.Where(z => z!= null).ToList();
+
                         var devices = DeviceInfoSerializer.ConvertJsonInDevices(reader.ReadToEnd(), context);
                         foreach (var item in devices)
                         {
@@ -44,10 +42,6 @@ namespace GHWebApplication.TasksRunAsync
                             context.Update(item);
                             context.SaveChanges();
                         }
-
-
-                        //_log.LogInformation(reader.ReadToEnd());
-
 
                         return null;
                     }
@@ -57,7 +51,28 @@ namespace GHWebApplication.TasksRunAsync
 
         public Task Invoke()
         {
-            return GetRequest();
+            var devices = new List<Device>();
+            using (var scope = _provider.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
+                devices = context.Devices.ToList();
+            }
+
+            var devCategories = new List<String>();
+            foreach (var item in devices)
+            {
+                if (!devCategories.Contains(item.Category))
+                {
+                    devCategories.Add(item.Category);
+                }
+            }
+
+            foreach (var item in devCategories)
+            {
+                GetRequest(item);
+            }
+
+            return null;
         }
     }
 }

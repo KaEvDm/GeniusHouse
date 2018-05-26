@@ -25,6 +25,7 @@ namespace GHWebApplication
             string connectionString = "Host=localhost;Port=5432;Database=DevicesDb;Username=postgres;Password=123";
             services.AddDbContext<ApplicationContext>(options => options.UseNpgsql(connectionString));
             services.AddSingleton<ITaskInvoke, UpdateDatabase>();
+            services.AddSingleton<ITaskInvoke, Neuron>();
             services.AddSingleton<IHostedService, TaskRunner>();
             
         }

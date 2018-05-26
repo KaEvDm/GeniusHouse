@@ -8,8 +8,10 @@ using System.Net;
 using System.IO;
 using System.Text;
 using Newtonsoft.Json;
+using GHWebApplication.TasksRunAsync;
+using System.Globalization;
 
-namespace HelloAngularApp.Controllers
+namespace GHWebApplication.Models
 {
     [Route("api/[controller]/[action]/")]
     public class DeviceController : Controller
@@ -18,13 +20,6 @@ namespace HelloAngularApp.Controllers
         public DeviceController(ApplicationContext context)
         {
             db = context;
-            //if (!db.Devices.Any())
-            //{
-            //    db.Devices.Add(new Device { Name = "iPhone X", Company = "Apple" });
-            //    db.Devices.Add(new Device { Name = "Galaxy S8", Company = "Samsung" });
-            //    db.Devices.Add(new Device { Name = "Pixel 2", Company = "Google" });
-            //    db.SaveChanges();
-            //}
         }
 
         [HttpGet]
@@ -52,16 +47,7 @@ namespace HelloAngularApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                //============кусок который должен будет взаимодействовать с микроконтроллером========
-                //"test." - это namespace в котором лежит dev
-                //dev.Category - ну к примеру "Lamp"
-                //var type = Type.GetType("DeviceCategories." + dev.Category);
-
-                //ConstructorInfo ctor = type.GetConstructor(new Type[] { dev.GetType() });
-                //var result = ctor.Invoke(new object[] { dev });
-                //============кусок который должен будет взаимодействовать с микроконтроллером========
-
-                string requestUri = "http://localhost/api/lamp/connectDevice?name=" + dev.Name;
+                string requestUri = "http://localhost/api/" + dev.Category + "/connectDevice?name=" + dev.Name;
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(requestUri);
 
                 WebResponse response = request.GetResponse();
@@ -69,7 +55,7 @@ namespace HelloAngularApp.Controllers
                 {
                     var result = streamReader.ReadToEnd();
 
-                    if(result == "device is connected" || result == "device is already connected")
+                    if (result == "device is connected" || result == "device is already connected")
                     {
                         db.Devices.Add(dev);
                         db.SaveChanges();
@@ -89,7 +75,7 @@ namespace HelloAngularApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://localhost/api/lamp/command");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://localhost/api/" + dev.Category + "/command");
                 request.Method = "PUT";
                 request.ContentType = "application/json";
 
@@ -100,6 +86,10 @@ namespace HelloAngularApp.Controllers
                 using (var streamWriter = new StreamWriter(request.GetRequestStream()))
                 {
                     var json = JsonConvert.SerializeObject(resultDev);
+                    if (json.Contains("Temperature"))
+                        NeuronTraining.Training(Convert.ToDouble(
+                            DeviceInfoSerializer.RunString(json, "Temperature"),
+                            new NumberFormatInfo { NumberGroupSeparator = "." }));
                     streamWriter.Write(json);
                 }
 
@@ -123,7 +113,7 @@ namespace HelloAngularApp.Controllers
             Device dev = db.Devices.FirstOrDefault(x => x.Id == id);
             if (dev != null)
             {
-                string requestUri = "http://localhost/api/lamp/disconnectDevice?name=" + dev.Name;
+                string requestUri = "http://localhost/api/" + dev.Category + "/disconnectDevice?name=" + dev.Name;
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(requestUri);
 
                 WebResponse response = request.GetResponse();
