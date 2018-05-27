@@ -9,16 +9,47 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Input, Component } from '@angular/core';
 import { DataService } from './data.service';
+import { Info } from './device';
 var DeviceListComponent = /** @class */ (function () {
     function DeviceListComponent(dataService) {
         this.dataService = dataService;
     }
     DeviceListComponent.prototype.ngOnInit = function () {
         this.load();
+        console.log("ngOnInit()", this.devices);
+        //    //this.devices[i].infoClass.fillFromJSON(this.devices[i].info); 
+        //}
+        //var jsonObj = JSON.parse(this.devices[0].info);
+        //for (var propName in jsonObj) {
+        //    this.test[propName] = jsonObj[propName];
+        //}
+    };
+    DeviceListComponent.prototype.fillFromJSON = function (json) {
+        var jsonObj = JSON.parse(json);
+        var info = new Info();
+        for (var propName in jsonObj) {
+            info[propName] = jsonObj[propName];
+            info["is" + propName] = true;
+            console.log("info[propName]", info[propName]);
+        }
+        return info;
     };
     DeviceListComponent.prototype.load = function () {
         var _this = this;
-        this.dataService.getDevices().subscribe(function (data) { return _this.devices = data; });
+        console.log("метод load()");
+        this.dataService.getDevices().subscribe(function (data) {
+            _this.devices = data;
+            for (var _i = 0, _a = _this.devices; _i < _a.length; _i++) {
+                var dev = _a[_i];
+                dev.infoClass = _this.fillFromJSON(dev.info);
+            }
+            console.log("data", data);
+            console.log("this.devices", _this.devices);
+            console.log("this.devices[0].infoClass.brightness", _this.devices[0].infoClass[0].brightness);
+            console.log("this.devices[1].infoClass.brightness", _this.devices[1].infoClass[0].brightness);
+            console.log("this.devices[2].infoClass.brightness", _this.devices[2].infoClass[0].brightness);
+        });
+        console.log("this.devices", this.devices);
     };
     DeviceListComponent.prototype.delete = function (id) {
         var _this = this;

@@ -15,6 +15,7 @@ var DataService = /** @class */ (function () {
         this.url = "/api/device/";
     }
     DataService.prototype.getDevices = function () {
+        console.log("метод getDevices");
         return this.http.get(this.url + "GetAll");
     };
     DataService.prototype.getDevice = function (id) {

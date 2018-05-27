@@ -12,6 +12,7 @@ export class DataService
 
     getDevices()
     {
+        console.log("метод getDevices");
         return this.http.get(this.url + "GetAll");
     }
 

@@ -3,22 +3,79 @@
     <a [routerLink]="['selectroom', room]" class="btn btn-sm btn-primary">Отсортировать по</a>
     <input type="text" [(ngModel)]="room" class="form-control" />
 </div>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <td>Модель</td>
-            <td>Производитель</td>
-            <td></td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let p of devices">
-            <td>{{p?.name}}</td>
-            <td>{{p?.company}}</td>
-            <td>
-                <a [routerLink]="['edit', p.id]" class="btn btn-sm btn-primary">Изменить</a>
-                <button (click)="delete(p.id)" class="btn btn-sm btn-danger">Удалить</button>
-            </td>
-        </tr>
-    </tbody>
-</table>
+
+<div class="row justify-content-around">
+    <div *ngFor="let p of devices" class="col-xs-4 border-dark bg-info">
+        <div class="form-group">
+            <label>Название модели</label>
+            <input class="form-control" disabled name="title" value={{p?.name}} />
+        </div>
+        <div class="form-group">
+            <label>Компания</label>
+            <input class="form-control" disabled name="title" value={{p?.company}} />
+        </div>
+        <div class="form-group">
+            <label>Категория</label>
+            <input class="form-control" disabled name="title" value={{p?.category}} />
+        </div>
+        <div class="form-group">
+            <label>Комната</label>
+            <input class="form-control" name="title" value={{p?.room}} />
+        </div>
+        <div class="form-group">
+            <label>Вкл/Выкл</label>
+            <input class="form-control" type="checkbox" name="title" value={{p?.power}} />
+        </div>
+
+        <div class="form-group">
+            <label>Информация</label>
+            <div *ngFor="let key of p.arrInfoKey">
+                <p>{{key}}</p>
+                <input class="form-control" name="title" value={{p.infoClass[0][key]}} />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <a [routerLink]="['edit', p.id]" class="btn btn-sm btn-primary">Изменить</a>
+            <button (click)="delete(p.id)" class="btn btn-sm btn-danger">Удалить</button>
+        </div>
+    </div>
+</div>
+
+<!--<div *ngFor="let p of devices" class="col-xs-4">
+    <p>{{p?.name}}</p>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td><b>Поле</b></td>
+                <td><b>Значение</b></td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Компания</td>
+                <td>{{p?.company}}</td>
+            </tr>
+            <tr>
+                <td>Категория</td>
+                <td>{{p?.category}}</td>
+            </tr>
+            <tr>
+                <td>Комната</td>
+                <td>{{p?.room}}</td>
+            </tr>
+            <tr>
+                <td>Вкл/Выкл</td>
+                <td>{{p?.power}}</td>
+            </tr>
+            <tr>
+                <td>Информация</td>
+                <td>{{p?.info}}</td>
+            </tr>
+            <tr>
+                <td><a [routerLink]="['edit', p.id]" class="btn btn-sm btn-primary">Изменить</a></td>
+                <td><button (click)="delete(p.id)" class="btn btn-sm btn-danger">Удалить</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>-->

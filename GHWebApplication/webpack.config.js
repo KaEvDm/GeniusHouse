@@ -1,6 +1,6 @@
 ﻿var path = require('path');
 var webpack = require('webpack');
-var UglifyJSPlugin = require('uglifyjs-webpack-plugin'); // плагин минимизации
+//var UglifyJSPlugin = require('uglifyjs-webpack-plugin'); // плагин минимизации
 module.exports = {
     entry: {
         'polyfills': './ClientApp/polyfills.ts',
@@ -44,6 +44,6 @@ module.exports = {
         new webpack.optimize.CommonsChunkPlugin({
             name: ['app', 'polyfills']
         }),
-        new UglifyJSPlugin()
+        //new UglifyJSPlugin()
     ]
 }

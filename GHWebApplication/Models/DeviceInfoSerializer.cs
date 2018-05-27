@@ -46,7 +46,7 @@ namespace GHWebApplication.Models
             dev.Company = RunString(json, "company");
             var info = DeleteDeviceFields(json);
 
-            dev.Info = info;
+            dev.Info = "[" + info.Remove(info.Length - 2, 1) + "]";
 
             return dev;
         }
@@ -108,9 +108,11 @@ namespace GHWebApplication.Models
 
         public static string ChangeFieldFromInfo<T>(string str, string fieldName, T value)
         {
-
             var start = str.IndexOf(fieldName) + fieldName.Length + "\":".Length;
+            //var end = str.IndexOf(',', start);
             var end = str.IndexOf(',', start);
+            if (end == -1) end = str.IndexOf('}', start) - 1;
+
             str = str.Remove(start, end - start);
             var result = Convert.ToString(value, new NumberFormatInfo { NumberGroupSeparator = "." });
             result = result.Remove(5);

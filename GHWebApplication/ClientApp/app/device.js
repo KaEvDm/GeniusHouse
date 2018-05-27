@@ -11,4 +11,11 @@ var Device = /** @class */ (function () {
     return Device;
 }());
 export { Device };
+var Info = /** @class */ (function () {
+    function Info() {
+        this.isbrightness = false;
+    }
+    return Info;
+}());
+export { Info };
 //# sourceMappingURL=device.js.map
