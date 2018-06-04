@@ -88549,7 +88549,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var DeviceListComponent = /** @class */ (function () {
     function DeviceListComponent(dataService) {
         this.dataService = dataService;
-        this.arr = [];
     }
     DeviceListComponent.prototype.ngOnInit = function () {
         this.load();

@@ -13,7 +13,6 @@ var Device = /** @class */ (function () {
 export { Device };
 var Info = /** @class */ (function () {
     function Info() {
-        this.isbrightness = false;
     }
     return Info;
 }());

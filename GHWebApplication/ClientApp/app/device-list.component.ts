@@ -20,13 +20,6 @@ export class DeviceListComponent implements OnInit {
     ngOnInit() {
         this.load();
         console.log("ngOnInit()", this.devices);
-        //    //this.devices[i].infoClass.fillFromJSON(this.devices[i].info); 
-            
-        //}
-        //var jsonObj = JSON.parse(this.devices[0].info);
-        //for (var propName in jsonObj) {
-        //    this.test[propName] = jsonObj[propName];
-        //}
     }
 
     fillFromJSON(json: string): Info {

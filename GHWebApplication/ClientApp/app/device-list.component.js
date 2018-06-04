@@ -42,12 +42,14 @@ var DeviceListComponent = /** @class */ (function () {
             for (var _i = 0, _a = _this.devices; _i < _a.length; _i++) {
                 var dev = _a[_i];
                 dev.infoClass = _this.fillFromJSON(dev.info);
+                var arr = [];
+                for (var key in dev.infoClass[0]) {
+                    arr.push(key);
+                }
+                dev.arrInfoKey = arr;
+                console.log("dev.arrInfoKey", dev.arrInfoKey);
             }
-            console.log("data", data);
             console.log("this.devices", _this.devices);
-            console.log("this.devices[0].infoClass.brightness", _this.devices[0].infoClass[0].brightness);
-            console.log("this.devices[1].infoClass.brightness", _this.devices[1].infoClass[0].brightness);
-            console.log("this.devices[2].infoClass.brightness", _this.devices[2].infoClass[0].brightness);
         });
         console.log("this.devices", this.devices);
     };
